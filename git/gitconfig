@@ -1,0 +1,23 @@
+[user]
+	name = Eduard-Cristian Boloș
+	email = eduardcbolos@gmail.com
+	signingkey = 842479FDEFC8A69E
+[core]
+	excludesfile = /Users/eduard/.gitignore_global
+	autocrlf = input
+	pager = "delta --plus-color=\"#012800\" --minus-color=\"#340001\""
+[commit]
+	gpgsign = true
+[alias]
+	unstash = stash pop
+	pull = pull --ff-only
+[protocol]
+	version = 2
+[gpg]
+	program = gpg
+[interactive]
+	diffFilter = delta --color-only
+[pull]
+	ff = only
+[init]
+	defaultBranch = main

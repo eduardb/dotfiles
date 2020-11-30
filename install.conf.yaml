@@ -1,13 +1,6 @@
-# - defaults:
-#     link:
-#       relink: true
-
-# - clean: ['~']
-
-# - link:
-#     ~/.tmux.conf: tmux.conf
-#     ~/.vim: vim
-#     ~/.vimrc: vimrc
+- defaults:
+    link:
+      relink: true
 
 - create:
     - ~/Documents/workspace
@@ -15,3 +8,25 @@
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
   - [chsh -s $(which zsh), Making zsh the default shell]
+  - [REPO=eduardb/oh-my-zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended, Installing oh-my-zsh]
+  - [rm ~/.zshrc, Removing default .zshrc file]
+
+- link:
+    ~/.zshrc: zsh/zshrc
+    ~/.gitconfig: git/gitconfig
+    ~/.gradle/gradle.properties: gradle/gradle.properties
+    ~/Library/Application Support/iTerm2/DynamicProfiles/Profiles.json: iterm2/Profiles.json
+    /usr/local/bin/subl: /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl
+    /usr/local/bin/readydocker.sh: scripts/readydocker.sh
+    /usr/local/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
+
+- shell:
+  - [sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)", "Installing Homebrew"]
+  
+- brewfile:
+    file: brew/Brewfile
+    no-upgrade: true
+
+- shell:
+  - [sh fonts/powerline.sh, "Installing Powerline fonts"]
+  - [sh -c "rm -f ~/.zcompdump; compinit; chmod go-w '/usr/local/share'" , "Rebuilding zcompdump"]

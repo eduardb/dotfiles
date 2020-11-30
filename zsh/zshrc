@@ -1,0 +1,95 @@
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/eduard/.oh-my-zsh"
+
+ZSH_THEME="agnoster"
+
+# _ and - will be interchangeable.
+HYPHEN_INSENSITIVE="true"
+
+# Command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+plugins=(adb ansible autojump aws brew cp docker docker-compose extract git git-extras git-flow gpg-agent gradle jenv lol mvn npm osx rbenv ripgrep sudo timer yarn)
+
+source $ZSH/oh-my-zsh.sh
+
+DEFAULT_USER=eduard
+prompt_context(){}
+
+### nvm
+export NVM_DIR=~/.nvm
+loadnvm() { source $(brew --prefix nvm)/nvm.sh }
+### end nvm
+
+### jenv
+function loadjenv() {
+	export PATH="$HOME/.jenv/bin:$PATH"
+    eval "$(jenv init -)"
+}
+### end jenvv
+
+alias thermlog="pmset -g thermlog"
+
+alias 'rm!'='env rm'
+alias 'rm'='trash -F'
+
+bindkey -e
+bindkey '[C' forward-word
+bindkey '[D' backward-word
+bindkey "\e\eOD" backward-word 
+bindkey "\e\eOC" forward-word
+
+
+export HISTFILESIZE=100000000
+export HISTSIZE=1000000
+
+export ANDROID_HOME=/Users/eduard/Library/Android/sdk
+export ANDROID_SDK=$ANDROID_HOME
+
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin
+
+
+function mkd() {
+  mkdir -p $1 && cd $_
+}
+
+function set-studio-jdk() {
+# call like: $ set-studio-jdk "/Applications/Android Studio.app"
+    export JAVA_HOME=$1/Contents/jre/jdk/Contents/home/
+}
+
+function screenshot-ocr() {
+	screencapture -i /tmp/tesseract.png
+	tesseract /tmp/tesseract.png stdout | tr -d \\f | pbcopy
+}
+
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+# end autojump
+
+# zsh-completions
+if type brew &>/dev/null; then
+	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+	autoload -Uz compinit
+	compinit
+fi
+# end zsh-completions
+
+# zsh-autosuggestions
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# end zsh-autosuggestions
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# end fzf
+
+# git-extras
+source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+# end git-extras
+
+export GPG_TTY=$(tty)
+
