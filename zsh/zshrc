@@ -1,3 +1,12 @@
+### Brew completions (https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh)
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+### end Brew completions
+
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/eduard/.oh-my-zsh"
 
@@ -90,6 +99,10 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # git-extras
 source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
 # end git-extras
+
+# zsh-syntax-highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#end zsh-syntax-highlighting
 
 export GPG_TTY=$(tty)
 
