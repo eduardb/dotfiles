@@ -1,3 +1,6 @@
+# Uncomment next line and run `zprof` to profile zsh startup
+# zmodload zsh/zprof
+
 ### Brew completions (https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh)
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
@@ -21,28 +24,33 @@ ENABLE_CORRECTION="true"
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(adb ansible autojump aws brew cp docker docker-compose extract git git-extras git-flow gpg-agent gradle jenv lol mvn npm osx rbenv ripgrep sudo timer yarn)
+### nvm
+export NVM_DIR=~/.nvm
+export NVM_LAZY=1
+### end nvm
+
+plugins=(adb ansible autojump aws brew command-not-found cp docker docker-compose extract genpass git git-extras git-flow gpg-agent gradle lol mvn npm nvm osx ripgrep sudo timer yarn)
+
+RPROMPT='$(jenv_prompt_info)'" "'$(rbenv_prompt_info)'"$RPROMPT"
 
 source $ZSH/oh-my-zsh.sh
 
 DEFAULT_USER=eduard
 prompt_context(){}
 
-### nvm
-export NVM_DIR=~/.nvm
-function loadnvm() {
-#     source $(brew --prefix nvm)/nvm.sh
-    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-    [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-}
-### end nvm
-
 ### jenv
 function loadjenv() {
-	export PATH="$HOME/.jenv/bin:$PATH"
-    eval "$(jenv init -)"
+# 	export PATH="$HOME/.jenv/bin:$PATH"
+#     eval "$(jenv init -)"
+    source $ZSH/plugins/jenv/jenv.plugin.zsh
 }
-### end jenvv
+### end jenv
+
+### rbenv
+function loadrbenv() {
+    source $ZSH/plugins/rbenv/rbenv.plugin.zsh
+}
+### end rbenv
 
 alias thermlog="pmset -g thermlog"
 
@@ -82,15 +90,6 @@ function screenshot-ocr() {
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 # end autojump
-
-# zsh-completions
-if type brew &>/dev/null; then
-	FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-	autoload -Uz compinit
-	compinit
-fi
-# end zsh-completions
 
 # zsh-autosuggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
