@@ -10,18 +10,25 @@
   - [chsh -s $(which zsh), Making zsh the default shell]
   - [REPO=eduardb/oh-my-zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended, Installing oh-my-zsh]
   - [rm ~/.zshrc, Removing default .zshrc file]
+  - [mkdir -p ~/.gradle, Create Gradle directory]
 
 - link:
     ~/.zshrc: zsh/zshrc
     ~/.gitconfig: git/gitconfig
     ~/.gradle/gradle.properties: gradle/gradle.properties
-    ~/Library/Application Support/iTerm2/DynamicProfiles/Profiles.json: iterm2/Profiles.json
-    /usr/local/bin/subl: /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl
     /usr/local/bin/readydocker.sh: scripts/readydocker.sh
     /usr/local/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
 
 - shell:
-  - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", "Installing Homebrew"]
+  - 
+    command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    stdin: true
+    stderr: true
+    description: Installing Homebrew
+
+- link:
+    ~/Library/Application Support/iTerm2/DynamicProfiles/Profiles.json: iterm2/Profiles.json
+    /usr/local/bin/subl: /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl
   
 - brewfile:
     file: brew/Brewfile
