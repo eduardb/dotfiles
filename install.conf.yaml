@@ -21,7 +21,7 @@
     /usr/local/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
 
 - shell:
-  - [sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)", "Installing Homebrew"]
+  - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", "Installing Homebrew"]
   
 - brewfile:
     file: brew/Brewfile
