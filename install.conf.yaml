@@ -18,6 +18,7 @@
     ~/.gradle/gradle.properties: gradle/gradle.properties
     /usr/local/bin/readydocker.sh: scripts/readydocker.sh
     /usr/local/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
+    /usr/local/bin/giffify.py: scripts/giffify.py
 
 - shell:
   - 

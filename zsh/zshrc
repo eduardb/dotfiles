@@ -29,7 +29,7 @@ export NVM_DIR=~/.nvm
 export NVM_LAZY=1
 ### end nvm
 
-plugins=(adb ansible autojump aws brew command-not-found cp docker docker-compose extract genpass git git-extras git-flow gpg-agent gradle lol mvn npm nvm osx ripgrep sudo timer yarn)
+plugins=(adb ansible autojump brew command-not-found cp docker docker-compose extract genpass git git-extras git-flow gpg-agent gradle lol macos mvn nvm ripgrep sudo timer yarn)
 
 RPROMPT='$(jenv_prompt_info)'" "'$(rbenv_prompt_info)'"$RPROMPT"
 
@@ -46,16 +46,53 @@ function loadjenv() {
 }
 ### end jenv
 
+### jdk version
+jdk() {
+        version=$1
+        export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+        java -version
+ }
+ ###
+
 ### rbenv
 function loadrbenv() {
     source $ZSH/plugins/rbenv/rbenv.plugin.zsh
 }
 ### end rbenv
 
+### pyenv
+function loadpyenv() {
+	if command -v pyenv 1>/dev/null 2>&1; then
+	  eval "$(pyenv init -)"
+	fi
+}
+### end pyenv
+
+### kubectl
+function loadkubectlcompletion() {
+	if (( $+commands[kubectl] )); then
+	    __KUBECTL_COMPLETION_FILE="${ZSH_CACHE_DIR}/kubectl_completion"
+
+	    if [[ ! -f $__KUBECTL_COMPLETION_FILE || ! -s $__KUBECTL_COMPLETION_FILE ]]; then
+	        kubectl completion zsh >! $__KUBECTL_COMPLETION_FILE
+	    fi
+
+	    [[ -f $__KUBECTL_COMPLETION_FILE ]] && source $__KUBECTL_COMPLETION_FILE
+
+	    unset __KUBECTL_COMPLETION_FILE
+	fi
+}
+### end kubectl
+
 alias thermlog="pmset -g thermlog"
 
 alias 'rm!'='env rm'
 alias 'rm'='trash -F'
+
+alias 'dcp'='docker-compose pause'
+alias 'dcu'='docker-compose unpause'
+
+alias 'gitsc'='git switch --create'
 
 bindkey -e
 bindkey '[C' forward-word
@@ -70,7 +107,7 @@ export HISTSIZE=1000000
 export ANDROID_HOME=/Users/eduard/Library/Android/sdk
 export ANDROID_SDK=$ANDROID_HOME
 
-export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools/proguard/bin
 
 
 function mkd() {
@@ -106,6 +143,17 @@ source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
 # zsh-syntax-highlighting
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #end zsh-syntax-highlighting
+
+# 1Password CLI
+eval "$(op completion zsh)"; compdef _op op
+# end 1Password CLI
+
+### GCloud 
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+### end GCloud 
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export GPG_TTY=$(tty)
 

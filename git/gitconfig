@@ -1,23 +1,47 @@
 [user]
 	name = Eduard-Cristian Boloș
-	email = eduardcbolos@gmail.com
+	email = eduardb@users.noreply.github.com
 	signingkey = 842479FDEFC8A69E
 [core]
 	excludesfile = /Users/eduard/.gitignore_global
 	autocrlf = input
-	pager = "delta --plus-color=\"#012800\" --minus-color=\"#340001\""
+	pager = delta
 [commit]
 	gpgsign = true
 [alias]
 	unstash = stash pop
 	pull = pull --ff-only
+	cor = !git for-each-ref --sort=-committerdate --format='%(refname:short) (%(committerdate:relative))' refs/heads | fzf --reverse --height 35% --nth 1 | awk '{print $1}' | xargs git checkout
+	cleanup = !git branch --merged origin/dev | grep -v 'dev$' | xargs git branch -d
 [protocol]
 	version = 2
 [gpg]
-	program = gpg
+	program = /usr/local/MacGPG2/bin/gpg
 [interactive]
-	diffFilter = delta --color-only
+	diffFilter = delta --color-only --features=interactive
 [pull]
 	ff = only
 [init]
 	defaultBranch = main
+[author]
+	name = Eduard-Cristian Boloș
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[delta]
+    line-numbers = true
+    side-by-side = true
+    plus-style = "syntax #003300"
+    minus-style = "normal #340001"
+[merge]
+    conflictstyle = diff3
+[push]
+	autoSetupRemote = true
