@@ -26,7 +26,7 @@ COMPLETION_WAITING_DOTS="true"
 
 ### nvm
 export NVM_DIR=~/.nvm
-export NVM_LAZY=1
+zstyle ':omz:plugins:nvm' lazy true
 ### end nvm
 
 plugins=(adb ansible autojump brew command-not-found cp docker docker-compose extract genpass git git-extras git-flow gpg-agent gradle lol macos mvn nvm ripgrep sudo timer yarn)
@@ -125,11 +125,11 @@ function screenshot-ocr() {
 }
 
 # autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 # end autojump
 
 # zsh-autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # end zsh-autosuggestions
 
 # fzf
@@ -137,11 +137,11 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # end fzf
 
 # git-extras
-source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+source /opt/homebrew/opt/git-extras/share/git-extras/git-extras-completion.zsh
 # end git-extras
 
 # zsh-syntax-highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #end zsh-syntax-highlighting
 
 # 1Password CLI
@@ -149,11 +149,14 @@ eval "$(op completion zsh)"; compdef _op op
 # end 1Password CLI
 
 ### GCloud 
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 ### end GCloud 
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export GPG_TTY=$(tty)
 
+
+# Wave config auto-added by bin/setup
+source /Users/eduard/.waverc
