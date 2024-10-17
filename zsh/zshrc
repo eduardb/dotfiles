@@ -25,13 +25,13 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 ### nvm
-export NVM_DIR=~/.nvm
-zstyle ':omz:plugins:nvm' lazy true
+# export NVM_DIR=~/.nvm
+# zstyle ':omz:plugins:nvm' lazy true
 ### end nvm
 
-plugins=(adb ansible autojump brew command-not-found cp docker docker-compose extract genpass git git-extras git-flow gpg-agent gradle lol macos mvn nvm ripgrep sudo timer yarn)
+plugins=(ansible autojump bgnotify brew command-not-found cp docker docker-compose extract genpass git git-extras gpg-agent gradle kubectl lol macos mvn sudo terraform timer)
 
-RPROMPT='$(jenv_prompt_info)'" "'$(rbenv_prompt_info)'"$RPROMPT"
+# RPROMPT='$(jenv_prompt_info)'" "'$(rbenv_prompt_info)'"$RPROMPT"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -94,6 +94,10 @@ alias 'dcu'='docker-compose unpause'
 
 alias 'gitsc'='git switch --create'
 
+alias 'scrcpyf'='adb devices -l | tail +2 | fzf -1 -0 --reverse --height 35% | cut -d" " -f1 | xargs scrcpy -s'
+
+alias 'tailscale'='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
+
 bindkey -e
 bindkey '[C' forward-word
 bindkey '[D' backward-word
@@ -109,6 +113,7 @@ export ANDROID_SDK=$ANDROID_HOME
 
 export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools/proguard/bin
 
+export KOTLIN_HOME=$(brew --prefix kotlin)/libexec
 
 function mkd() {
   mkdir -p $1 && cd $_
@@ -144,13 +149,21 @@ source /opt/homebrew/opt/git-extras/share/git-extras/git-extras-completion.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #end zsh-syntax-highlighting
 
-# 1Password CLI
-eval "$(op completion zsh)"; compdef _op op
-# end 1Password CLI
+# # 1Password CLI
+# eval "$(op completion zsh)"; compdef _op op
+# # end 1Password CLI
+
+# OrbStack
+# if (( $+commands[orbctl] )); then
+#   eval "$(orbctl completion zsh)"
+#   compdef _orb orbctl
+#   compdef _orb orb
+# fi
+# end OrbStack
 
 ### GCloud 
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+# source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 ### end GCloud 
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

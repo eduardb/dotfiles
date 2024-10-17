@@ -13,6 +13,7 @@
 	pull = pull --ff-only
 	cor = !git for-each-ref --sort=-committerdate --format='%(refname:short) (%(committerdate:relative))' refs/heads | fzf --reverse --height 35% --nth 1 | awk '{print $1}' | xargs git checkout
 	cleanup = !git branch --merged origin/dev | grep -v 'dev$' | xargs git branch -d
+	sh = "!f() { root=$(pwd)/ && cd ${root%%/.git/*} && git rev-parse && exec \"$@\"; }; f"
 [protocol]
 	version = 2
 [gpg]
@@ -45,3 +46,9 @@
     conflictstyle = diff3
 [push]
 	autoSetupRemote = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
