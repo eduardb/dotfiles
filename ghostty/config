@@ -1,0 +1,24 @@
+theme = Solarized Dark - Patched
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = false
+font-family = Hack Nerd Font Mono
+
+initial-window = false
+copy-on-select = true
+background-opacity = 0.9
+background-blur-radius = 5
+window-step-resize = true
+macos-option-as-alt = true
+quick-terminal-screen = mouse
+#cursor-invert-fg-bg = true
+
+# Keybindings
+keybind = global:alt+grave_accent=toggle_quick_terminal
+keybind = shift+ctrl+equal=new_split:right
+keybind = shift+ctrl+minus=new_split:down
+keybind = shift+ctrl+0=equalize_splits
+keybind = alt+h=goto_split:left
+keybind = alt+j=goto_split:bottom
+keybind = alt+k=goto_split:top
+keybind = alt+l=goto_split:right

@@ -33,6 +33,7 @@
     /opt/homebrew/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
     /opt/homebrew/bin/giffify.py: scripts/giffify.py
     ~/Library/Application Support/iTerm2/DynamicProfiles/Profiles.json: iterm2/Profiles.json
+    ~/Library/Application Support/com.mitchellh.ghostty/config: ghostty/config
     /opt/homebrew/bin/subl: /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl
 
 - shell:
