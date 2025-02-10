@@ -29,12 +29,12 @@
     no-upgrade: true
 
 - link:
-    /opt/homebrew/bin/readydocker.sh: scripts/readydocker.sh
-    /opt/homebrew/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
-    /opt/homebrew/bin/giffify.py: scripts/giffify.py
+    /usr/local/bin/readydocker.sh: scripts/readydocker.sh
+    /usr/local/bin/docker_cleanup.sh: scripts/docker_cleanup.sh
+    /usr/local/bin/giffify.py: scripts/giffify.py
     ~/Library/Application Support/iTerm2/DynamicProfiles/Profiles.json: iterm2/Profiles.json
     ~/Library/Application Support/com.mitchellh.ghostty/config: ghostty/config
-    /opt/homebrew/bin/subl: /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl
+    /usr/local/bin/subl: /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl
 
 - shell:
   - [sh fonts/powerline.sh, "Installing Powerline fonts"]
