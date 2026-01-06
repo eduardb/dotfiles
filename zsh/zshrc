@@ -1,13 +1,18 @@
 # Uncomment next line and run `zprof` to profile zsh startup
 # zmodload zsh/zprof
 
-### Brew completions (https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh)
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+# DISABLE_MAGIC_FUNCTIONS="true"
+# ZSH_DISABLE_COMPFIX=true
 
-  autoload -Uz compinit
-  compinit
-fi
+### Brew completions (https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh)
+### Redundant due to brew plugin below
+# if type brew &>/dev/null; then
+#   eval "$(brew shellenv)"
+
+#   # compinit is called somewhere else already
+#   # autoload -Uz compinit
+#   # compinit
+# fi
 ### end Brew completions
 
 # Path to your oh-my-zsh installation.
@@ -29,7 +34,7 @@ COMPLETION_WAITING_DOTS="true"
 # zstyle ':omz:plugins:nvm' lazy true
 ### end nvm
 
-plugins=(ansible autojump bgnotify brew command-not-found cp docker docker-compose extract genpass git git-extras gpg-agent gradle kubectl lol macos mvn sudo terraform timer)
+plugins=(ansible autojump bgnotify brew command-not-found cp docker docker-compose extract genpass git git-extras gpg-agent gradle macos sudo terraform timer)
 
 # RPROMPT='$(jenv_prompt_info)'" "'$(rbenv_prompt_info)'"$RPROMPT"
 
@@ -52,8 +57,8 @@ jdk() {
         export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
         java -version
  }
- # jdk 21 2> /dev/null
- export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home"
+ # jdk 17 2> /dev/null
+ export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
  ###
 
 ### rbenv
@@ -95,6 +100,7 @@ alias 'dcp'='docker-compose pause'
 alias 'dcu'='docker-compose unpause'
 
 alias 'gitsc'='git switch --create'
+alias 'gi'='git'
 
 alias 'scrcpyf'='adb devices -l | tail +2 | fzf -1 -0 --reverse --height 35% | cut -d" " -f1 | xargs scrcpy -s'
 
@@ -140,7 +146,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # end zsh-autosuggestions
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 # end fzf
 
 # git-extras
@@ -163,15 +169,47 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # fi
 # end OrbStack
 
-### GCloud 
-# source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-# source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-### end GCloud 
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+# interactive ADB
+# adapted from https://gist.github.com/zmdominguez/9a889f1c367e1a21203ce8527c81e612
+
+# Sends an interactive ADB command
+# Usage: Use the usual ADB command, replacing `adb` with `adbi`
+
+function adbi() {
+    local devices
+    devices=$(adb devices -l | grep -v "unauthorized" | grep -E ".*?model:\S*" | \
+              fzf -1 -0 --reverse --height 35% -m | cut -d" " -f1)
+
+    if [[ -n "$devices" ]]; then
+      for device in $devices; do
+        if [[ "$1" == "shell" && $# -eq 1 ]]; then
+          # Directly invoke shell to keep it interactive
+          adb -s "$device" shell
+        else
+          adb -s "$device" "$@"
+        fi
+      done
+    fi
+}
+
+# Display modes
+alias darkMode='adbi shell cmd uimode night yes > /dev/null'
+alias lightMode='adbi shell cmd uimode night no > /dev/null'
+
+# Deep links
+function deeplink() {
+  adbi shell am start -W -a android.intent.action.VIEW -d \""$1"\"
+}
 
 export GPG_TTY=$(tty)
 
+alias tldr='nocorrect tldr'
+alias j='nocorrect j'
+
+alias bringz='git pull'
 
 # Wave config auto-added by bin/setup
 source /Users/eduard/.waverc
